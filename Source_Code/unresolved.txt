@@ -1,0 +1,133 @@
+
+
+
+
+
+
+
+
+
+
+// Setup Sikuli on Windows platfor:
+http://www.testingdiaries.com/setup-sikuli-windows/
+
+http://www.sikulix.com/quickstart.html
+
+
+Verify Scrollbar presence:
+
+public void GoogleSearch() throws Exception {
+String execScript = "return document.documentElement.scrollHeight>document.documentElement.clientHeight;";
+		JavascriptExecutor scrollBarPresent = (JavascriptExecutor) driver;
+		Boolean test = (Boolean) (scrollBarPresent.executeScript(execScript));
+		if (test == true) {
+			System.out.print("Scrollbar is present.");
+		} else if (test == false){
+			System.out.print("Scrollbar is not present.");
+		}
+	}
+
+
+Write below JavaScript Executor code in your Class file.
+
+public void elementHighlight(WebElement element) {
+		for (int i = 0; i < 2; i++) {
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript(
+					"arguments[0].setAttribute('style', arguments[1]);",
+					element, "color: red; border: 3px solid red;");
+			js.executeScript(
+					"arguments[0].setAttribute('style', arguments[1]);",
+					element, "");
+		}
+	}
+
+
+Perform MouseOver ToolTip :
+public void GoogleTooltip() throws Exception {
+		Actions ToolTip1 = new Actions(driver);
+		WebElement googleLogo = driver.findElement(By.xpath("//div[@id='hplogo']"));
+		ToolTip1.clickAndHold(googleLogo).perform(); // Perform mouse hover action using 'clickAndHold' method
+		String ToolTipText = googleLogo.getAttribute("title"); // Get the value of Tooltip by getAttribute command
+		Assert.assertEquals(ToolTipText, "Google");
+		System.out.println("Tooltip value is: " + ToolTipText);
+	}
+
+@Test
+	public void GoogleSearch() throws Exception, SQLException {
+ 
+		driver.findElement(By.xpath("//center/div[2]")).click();
+		WebElement searchBox = driver.findElement(By.xpath("//div[3]/div/input"));
+		elementHighlight(searchBox);
+		driver.findElement(By.xpath("//div[3]/div/input")).clear();
+		driver.findElement(By.xpath("//div[3]/div/input")).sendKeys("Test");
+		driver.findElement(By.xpath("//button")).click();
+ 
+	}
+
+
+Steps:
+
+    Download PDFBox API from here.
+    Reference PDFBox JAR file in your Selenium project.
+    Open your class file and define the URL of PDF file using this code.
+    URL TestURL = new URL("http://www.axmag.com/download/pdfurl-guide.pdf");
+    1
+    	
+    URL TestURL = new URL("http://www.axmag.com/download/pdfurl-guide.pdf");
+    Now, use below code to convert PDF content to text. PDFBox API is used along with Java input stream for this purpose.
+    BufferedInputStream TestFile = new BufferedInputStream(TestURL.openStream());
+    PDFParser TestPDF = new PDFParser(TestFile);
+    TestPDF.parse();
+    String TestText = new PDFTextStripper().getText(TestPDF.getPDDocument());
+    1
+    2
+    3
+    4
+    	
+    BufferedInputStream TestFile = new BufferedInputStream(TestURL.openStream());
+    PDFParser TestPDF = new PDFParser(TestFile);
+    TestPDF.parse();
+    String TestText = new PDFTextStripper().getText(TestPDF.getPDDocument());
+    Use TestNG assert command to verify that PDF contains ‘Open the setting.xml, you can see it is like this’ text.
+    Assert.assertTrue(TestText.contains("Open the setting.xml, you can see it is like this"));
+    1
+    	
+    Assert.assertTrue(TestText.contains("Open the setting.xml, you can see it is like this"));
+    After performing all above steps, your Selenium WebDriver read PDF method should be as below.
+    public void ReadPDF() throws Exception {
+    URL TestURL = new URL("http://www.axmag.com/download/pdfurl-guide.pdf");
+
+    BufferedInputStream TestFile = new BufferedInputStream(TestURL.openStream());
+    PDFParser TestPDF = new PDFParser(TestFile);
+    TestPDF.parse();
+    String TestText = new PDFTextStripper().getText(TestPDF.getPDDocument());
+
+    Assert.assertTrue(TestText.contains("Open the setting.xml, you can see it is like this"));
+
+    }
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+    	
+    public void ReadPDF() throws Exception {
+    URL TestURL = new URL("http://www.axmag.com/download/pdfurl-guide.pdf");
+     
+    BufferedInputStream TestFile = new BufferedInputStream(TestURL.openStream());
+    PDFParser TestPDF = new PDFParser(TestFile);
+    TestPDF.parse();
+    String TestText = new PDFTextStripper().getText(TestPDF.getPDDocument());
+     
+    Assert.assertTrue(TestText.contains("Open the setting.xml, you can see it is like this"));
+     
+    }
+
+http://sikulix-2014.readthedocs.org/en/latest/faq/030-java-dev.html

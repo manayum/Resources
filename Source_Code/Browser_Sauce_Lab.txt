@@ -1,0 +1,69 @@
+public WebDriver driver;
+
+
+    @Parameters("browser")
+    @BeforeTest
+    public void setU(String browser)throws Exception
+    {
+      //  if(sauceLab == true){
+            setUpCloud(browser);
+        //}
+        //else{
+          //  setUpLocalEnvironment(browser);
+        //}
+
+    }
+
+    public void setUpCloud(String browser)throws Exception{
+
+        if(browser.equalsIgnoreCase("edge")){
+            DesiredCapabilities capabilities = DesiredCapabilities.edge();
+            capabilities.setCapability("version", "20.10");
+            capabilities.setCapability("platform", Platform.WIN10);
+            this.driver = new RemoteWebDriver(new URL("http://manayum:135c32f9-91fa-4ede-a2d7-8056d1ca80c0@ondemand.saucelabs.com:80/wd/hub")
+                    ,capabilities);
+
+        }else if(browser.equalsIgnoreCase("safari")){
+            DesiredCapabilities capabilities = DesiredCapabilities.safari();
+            capabilities.setCapability("platform", "OS X 10.11");
+            capabilities.setCapability("version", "9.0");
+            this.driver = new RemoteWebDriver(new URL("http://manayum:135c32f9-91fa-4ede-a2d7-8056d1ca80c0@ondemand.saucelabs.com:80/wd/hub")
+                    ,capabilities);
+        }else if(browser.equalsIgnoreCase("chrome")){
+            DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+            capabilities.setCapability("version", "48");
+            capabilities.setCapability("platform", Platform.WINDOWS);
+            this.driver = new RemoteWebDriver(new URL("http://manayum:135c32f9-91fa-4ede-a2d7-8056d1ca80c0@ondemand.saucelabs.com:80/wd/hub")
+                    ,capabilities);
+        }else if(browser.equalsIgnoreCase("ie")){
+            DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+            capabilities.setCapability("version", "10.0");
+            capabilities.setCapability("platform", Platform.WIN8);
+            this.driver = new RemoteWebDriver(new URL("http://manayum:135c32f9-91fa-4ede-a2d7-8056d1ca80c0@ondemand.saucelabs.com:80/wd/hub")
+                    ,capabilities);
+        }else if(browser.equalsIgnoreCase("iphone")){
+            DesiredCapabilities caps = DesiredCapabilities.iphone();
+            caps.setCapability("platform", "OS X 10.10");
+            caps.setCapability("version", "9.1");
+            caps.setCapability("deviceName","iPhone 5");
+            caps.setCapability("deviceOrientation", "portrait");
+            this.driver = new RemoteWebDriver(new URL("http://manayum:135c32f9-91fa-4ede-a2d7-8056d1ca80c0@ondemand.saucelabs.com:80/wd/hub")
+                    ,caps);
+        }
+
+
+
+    }
+
+    @Test
+    public void browserTest(){
+        driver.navigate().to("http://www.cnn.com");
+        driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
+        System.out.println(driver.getCurrentUrl());
+    }
+
+    @AfterTest
+    public void tearDown()throws Exception{
+        driver.quit();
+    }
+}
