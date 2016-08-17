@@ -1,4 +1,4 @@
-package com.kata;
+package coding.bat.Array_01;
 
 /**
  * Created by Admin on 8/14/2016.

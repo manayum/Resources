@@ -1,4 +1,4 @@
-package com.kata;
+package code.wars;
 
 /**
  * Created by Admin on 8/14/2016.
